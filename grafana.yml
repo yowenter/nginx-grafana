@@ -1,1 +1,24 @@
+version: "2.0"
+services:
+  grafana:
+    image: tutum/grafana
+    environment:
+      - INFLUXDB_HOST=influxdb
+      - INFLUXDB_PORT=8086 
+      - INFLUXDB_NAME=test
+      - INFLUXDB_USER=root 
+      - INFLUXDB_PASS=root 
+      - INFLUXDB_IS_GRAFANADB=true 
 
+    ports:
+      - 9000:80
+
+
+  influxdb:
+    image: tutum/influxdb
+    ports:
+      - 8083:8083
+      - 8086:8086
+
+    volumes:
+      - /var/influxdb:/data/influxdb
