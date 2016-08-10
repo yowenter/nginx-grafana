@@ -9,6 +9,8 @@ def input_stream():
     while True:  
         for line in sys.stdin:
             yield line
+        time.sleep(3)  # to prevent the cpu too high
+
 
 class Parser(object):
 
@@ -88,6 +90,7 @@ def main():
             client.save_request_info(req_dict)
             last_save_time = now_time
             req_dict = get_init_req_dict()
+            time.sleep(5)
 
 if __name__ == '__main__':
     main()
