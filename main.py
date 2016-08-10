@@ -6,8 +6,9 @@ import time
 nginx_log_pattern = re.compile('\s*(?P<ip>\d+.\d+.\d+.\d+)\s-\s-\s\[(?P<date>.+)\]\s"(?P<method>\w+)\s(?P<path>\S+)')
 
 def input_stream():
-    for line in sys.stdin:
-        yield line
+    while True:  
+        for line in sys.stdin:
+            yield line
 
 class Parser(object):
 
