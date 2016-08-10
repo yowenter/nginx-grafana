@@ -1,1 +1,1 @@
-requests
+influxdb==3.0.0
