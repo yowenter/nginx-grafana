@@ -3,7 +3,7 @@ import re
 import requests
 
 nginx_log_pattern = re.compile(
-    '\s+(?P<ip>\d+.\d+.\d+.\d+)\s-\s-\s\[(?P<date>.+)\]\s"(?P<method>\w+)\s(?P<path>\S+)')
+    '\s*(?P<ip>\d+.\d+.\d+.\d+)\s-\s-\s\[(?P<date>.+)\]\s"(?P<method>\w+)\s(?P<path>\S+)')
 
 
 def input_stream():
@@ -32,10 +32,9 @@ class RequestData(object):
         self.method = method
         self.path = path
 
-    def as_dict(self,use_grafana=True):
-    	if use_grafana:
-    		return {}
-
+    def as_dict(self, use_grafana=True):
+        if use_grafana:
+            return {}
 
 
 class GrafanaClient(requests.Session):
@@ -44,11 +43,9 @@ class GrafanaClient(requests.Session):
 
 def main():
     for line in input_stream():
-    	data_tuple = Parser(line).parse()
-    	if data_tuple:
-    		data = RequestData(*data_tuple)
-    		
-
+        data_tuple = Parser(line).parse()
+        if data_tuple:
+            data = RequestData(*data_tuple)
 
 
 if __name__ == '__main__':
