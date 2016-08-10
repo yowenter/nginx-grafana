@@ -54,7 +54,8 @@ class InfluxDBClient:
 
 def replace_uuid(path):
     path_without_uuid = re.sub(r'([0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12})', 'uuid', path)
-    return re.sub(r'(\?.+)', '', path_without_uuid)
+    path_without_params = re.sub(r'(\?.+)', '', path_without_uuid)
+    return re.sub(r'apps/(.{8})', 'apps/app_uuid', path_without_params)
 
 def get_init_req_dict():
     return {
@@ -73,9 +74,11 @@ def main():
         data_tuple = Parser(line).parse()
         if data_tuple:
             data = RequestData(*data_tuple)
-            if not data or data.method not in req_dict.keys():
-                continue
             path = replace_uuid(data.path)
+            if not data or \
+                    data.method not in req_dict.keys() or \
+                    '.' in data.path:
+                continue
             if req_dict[data.method].get(path) is None:
                 req_dict[data.method][path] = 1
             else:
