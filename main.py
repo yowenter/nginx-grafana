@@ -53,7 +53,8 @@ class InfluxDBClient:
 
 
 def replace_uuid(path):
-    return re.sub(r'([0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12})', 'uuid', path)
+    path_without_uuid = re.sub(r'([0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12})', 'uuid', path)
+    return re.sub(r'(\?.+)', '', path_without_uuid)
 
 def get_init_req_dict():
     return {
